@@ -3,15 +3,17 @@ import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
 import apiRoutes from "./routes/api";
+import passport from "./config/passport";
 
 dotenv.config();
 
 const server = express();
+server.use(passport.initialize());
 
 server.use(cors());
 
 server.use(express.static(path.join(__dirname, "../public")));
-server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
 
 server.use("/", apiRoutes);
 
