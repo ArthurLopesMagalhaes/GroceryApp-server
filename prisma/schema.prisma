@@ -65,8 +65,7 @@ model Users {
   nickname      String         @db.VarChar
   phone_number  String         @db.VarChar
   gender        String         @db.VarChar
-  date_birth    DateTime       @db.Date
-  remember_me   Boolean
+  birth_date    DateTime       @db.Date
   profile_photo String         @db.VarChar
   token         String?        @db.VarChar
   addresses     Addresses[]
