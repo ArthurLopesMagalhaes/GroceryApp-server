@@ -1,7 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
-import sharp from "sharp";
 import { v4 as uuidv4 } from "uuid";
+import cloudinary from "../config/cloudinary";
+
 import { generateToken } from "../config/passport";
 import { singUpProps } from "../controllers/authController";
 
@@ -35,19 +36,30 @@ export const createUser = async (
 
   const password_hash = bcrypt.hashSync(data.password, 10);
   const token = generateToken(data.email);
-  let profile_photo = "default.png";
 
   if (file) {
-    const randUuid = uuidv4();
-    const imageUrl = `http://localhost:5000/media/${randUuid}.jpg`;
-    await sharp(file.buffer)
-      .resize(500, 500)
-      .toFormat("jpg")
-      .toFile(`./public/media/${randUuid}.jpg`);
-    profile_photo = imageUrl;
-  }
-
-  try {
+    try {
+      const result = await cloudinary.uploader.upload(file.path, {
+        public_id: `GroceryApp/users/${uuidv4()}`,
+      });
+      const newUser = await prisma.users.create({
+        data: {
+          birth_date: new Date(data.birth_date),
+          email: data.email,
+          full_name: data.full_name,
+          gender: data.gender,
+          nickname: data.nickname,
+          phone_number: data.phone_number,
+          profile_photo: result.secure_url,
+          password_hash,
+          token,
+        },
+      });
+      return newUser;
+    } catch (error) {
+      return new Error();
+    }
+  } else {
     const newUser = await prisma.users.create({
       data: {
         birth_date: new Date(data.birth_date),
@@ -56,13 +68,11 @@ export const createUser = async (
         gender: data.gender,
         nickname: data.nickname,
         phone_number: data.phone_number,
-        profile_photo,
+        profile_photo: "default.png",
         password_hash,
         token,
       },
     });
     return newUser;
-  } catch (error) {
-    return new Error("Something went wrong");
   }
 };

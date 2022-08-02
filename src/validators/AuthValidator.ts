@@ -41,7 +41,10 @@ export const signUp = checkSchema({
     isNumeric: true,
     errorMessage: "Preencha o numero de telefone",
   },
-  date_birth: {
+  birth_date: {
+    notEmpty: {
+      errorMessage: "Birth date is required",
+    },
     toDate: true,
   },
   gender: {
