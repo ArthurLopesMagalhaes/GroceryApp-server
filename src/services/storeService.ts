@@ -20,10 +20,18 @@ export const findAllStores = async ({ quantity = 3 }: FindAllStoresProps) => {
 
 export const findStore = async (id: number) => {
   try {
-    const store = await prisma.stores.findUnique({ where: { id } });
-    if (!store) {
+    const storeRequest = await Promise.all([
+      prisma.stores.findUnique({ where: { id } }),
+      prisma.products.findMany({ where: { id_store: id }, take: 4 }),
+    ]);
+    if (!storeRequest) {
       return new Error("Store doesn't exist");
     }
+    const store = {
+      info: storeRequest[0],
+      products: storeRequest[1],
+    };
+
     return store;
   } catch (error) {
     return new Error("Someting went wrong. Please, try again.");
