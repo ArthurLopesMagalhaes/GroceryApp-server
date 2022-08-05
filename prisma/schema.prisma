@@ -9,11 +9,11 @@ datasource db {
 
 model Addresses {
   id       Int    @id @default(autoincrement())
-  id_user  Int
-  id_store Int
+  id_user  Int?
+  id_store Int?
   address  String @db.VarChar
-  stores   Stores @relation(fields: [id_store], references: [id])
-  user     Users  @relation(fields: [id_user], references: [id])
+  stores   Stores? @relation(fields: [id_store], references: [id])
+  user     Users?  @relation(fields: [id_user], references: [id])
 }
 
 model Orders {

@@ -21,7 +21,6 @@ export const signIn = async (req: Request, res: Response) => {
   if (user instanceof Error) {
     return res.json({ error: user.message });
   }
-
   return res.json({ user });
 };
 
@@ -33,7 +32,7 @@ export type singUpProps = {
   phone_number: string;
   gender: string;
   birth_date: Date;
-  img64: string;
+  avatar: string;
 };
 
 export const signUp = async (req: Request, res: Response) => {
@@ -46,6 +45,7 @@ export const signUp = async (req: Request, res: Response) => {
   const data: singUpProps = req.body;
 
   const file = req.file;
+
   const newUser = await UserService.createUser(data, file);
   if (newUser instanceof Error) {
     return res.json({ error: newUser.message });

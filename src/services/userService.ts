@@ -37,6 +37,8 @@ export const createUser = async (
   const password_hash = bcrypt.hashSync(data.password, 10);
   const token = generateToken(data.email);
 
+  console.log(data);
+
   if (file) {
     try {
       const result = await cloudinary.uploader.upload(file.path, {
