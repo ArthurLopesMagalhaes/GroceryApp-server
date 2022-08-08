@@ -17,6 +17,7 @@ router.post(
 );
 
 router.get("/stores", StoreController.getStores);
-router.get("/store", StoreController.getStoresById);
+router.get("/store/:id", StoreController.getStoreById);
+router.get("/testimonials/:store_id", StoreController.getTestimonials);
 
 export default router;

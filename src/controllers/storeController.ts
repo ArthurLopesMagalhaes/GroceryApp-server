@@ -10,12 +10,22 @@ export const getStores = async (req: Request, res: Response) => {
   return res.json({ stores });
 };
 
-export const getStoresById = async (req: Request, res: Response) => {
-  const { id } = req.query;
+export const getStoreById = async (req: Request, res: Response) => {
+  const { id } = req.params;
 
   const store = await storeService.findStore(Number(id));
   if (store instanceof Error) {
     return res.json({ error: store.message });
   }
   return res.json({ store });
+};
+export const getTestimonials = async (req: Request, res: Response) => {
+  const { store_id } = req.params;
+  console.log(store_id);
+
+  const testimonials = await storeService.findTestimonials(Number(store_id));
+  if (testimonials instanceof Error) {
+    return res.json({ error: testimonials.message });
+  }
+  return res.json({ testimonials });
 };

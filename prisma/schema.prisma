@@ -51,12 +51,13 @@ model Stores {
 }
 
 model Testimonials {
-  id       Int    @id @default(autoincrement())
-  id_user  Int
-  id_store Int
-  rate     Float  @db.Real
-  stores   Stores @relation(fields: [id_store], references: [id])
-  user     Users  @relation(fields: [id_user], references: [id])
+  id            Int    @id @default(autoincrement())
+  id_user       Int
+  id_store      Int
+  rating        Float  @db.Real
+  user_photo    String  @db.VarChar 
+  stores        Stores @relation(fields: [id_store], references: [id])
+  user          Users  @relation(fields: [id_user], references: [id])
 }
 
 model Users {
