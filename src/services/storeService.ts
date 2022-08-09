@@ -25,7 +25,7 @@ export const findStore = async (id: number) => {
       prisma.products.findMany({ where: { id_store: id }, take: 4 }),
       prisma.testimonials.findMany({ where: { id_store: id }, take: 2 }),
     ]);
-    console.log(storeRequest);
+
     if (!storeRequest) {
       return new Error("Store doesn't exist");
     }
@@ -36,6 +36,19 @@ export const findStore = async (id: number) => {
     };
 
     return store;
+  } catch (error) {
+    return new Error("Someting went wrong. Please, try again.");
+  }
+};
+export const findProduct = async (id: number) => {
+  try {
+    const product = await prisma.products.findUnique({ where: { id } });
+
+    if (!product) {
+      return new Error("Product doesn't exist");
+    }
+
+    return product;
   } catch (error) {
     return new Error("Someting went wrong. Please, try again.");
   }

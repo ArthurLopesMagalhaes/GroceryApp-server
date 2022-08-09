@@ -19,6 +19,16 @@ export const getStoreById = async (req: Request, res: Response) => {
   }
   return res.json({ store });
 };
+export const getProductById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const product = await storeService.findProduct(Number(id));
+  if (product instanceof Error) {
+    return res.json({ error: product.message });
+  }
+  return res.json({ product });
+};
+
 export const getTestimonials = async (req: Request, res: Response) => {
   const { store_id } = req.params;
 
