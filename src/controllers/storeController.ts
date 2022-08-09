@@ -21,11 +21,21 @@ export const getStoreById = async (req: Request, res: Response) => {
 };
 export const getTestimonials = async (req: Request, res: Response) => {
   const { store_id } = req.params;
-  console.log(store_id);
 
   const testimonials = await storeService.findTestimonials(Number(store_id));
   if (testimonials instanceof Error) {
     return res.json({ error: testimonials.message });
   }
   return res.json({ testimonials });
+};
+
+export const getProducts = async (req: Request, res: Response) => {
+  const { store_id } = req.params;
+
+  const products = await storeService.findProducts(Number(store_id));
+  if (products instanceof Error) {
+    return res.json({ error: products.message });
+  }
+
+  return res.json({ products });
 };
