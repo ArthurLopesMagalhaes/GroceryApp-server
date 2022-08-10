@@ -29,12 +29,12 @@ model Orders {
 model Products {
   id            Int    @id @default(autoincrement())
   id_store      Int  
-  id_order      Int?
   name          String @db.VarChar
   price         Float  @db.Real
   product_photo String @db.VarChar
   description   String @db.VarChar
-  orders        Orders? @relation(fields: [id_order], references: [id], map: "products_orders_fk")
+  rating        Float  @db.Real
+  orders        Orders? @relation(fields: [id], references: [id], map: "products_orders_fk")
   stores        Stores @relation(fields: [id_store], references: [id], map: "products_stores_fk")
 }
 
@@ -55,7 +55,8 @@ model Testimonials {
   id_user       Int
   id_store      Int
   rating        Float  @db.Real
-  user_photo    String  @db.VarChar 
+  comment       String @db.VarChar
+  date          DateTime       @db.Date
   stores        Stores @relation(fields: [id_store], references: [id])
   user          Users  @relation(fields: [id_user], references: [id])
 }
@@ -74,4 +75,9 @@ model Users {
   addresses     Addresses[]
   orders        Orders[]
   testimonials  Testimonials[]
+}
+
+model Favorites {
+ id   Int @id @default(autoincrement())
+ id_product Int   
 }

@@ -3,7 +3,7 @@ import { validationResult } from "express-validator";
 import { v4 as uuidv4 } from "uuid";
 import multer from "multer";
 
-import * as UserService from "../services/userService";
+import * as AuthService from "../services/authService";
 
 export const ping = async (req: Request, res: Response) => {
   return res.json({ pong: true });
@@ -16,7 +16,7 @@ export const signIn = async (req: Request, res: Response) => {
     return res.status(400).json(errors.mapped());
   }
   const { email, password } = req.body;
-  const user = await UserService.loginUser(email, password);
+  const user = await AuthService.loginUser(email, password);
 
   if (user instanceof Error) {
     return res.json({ error: user.message });
@@ -46,7 +46,7 @@ export const signUp = async (req: Request, res: Response) => {
 
   const file = req.file;
 
-  const newUser = await UserService.createUser(data, file);
+  const newUser = await AuthService.createUser(data, file);
   if (newUser instanceof Error) {
     return res.json({ error: newUser.message });
   }

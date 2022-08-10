@@ -31,8 +31,12 @@ export const getProductById = async (req: Request, res: Response) => {
 
 export const getTestimonials = async (req: Request, res: Response) => {
   const { store_id } = req.params;
+  const { quantity } = req.query;
 
-  const testimonials = await storeService.findTestimonials(Number(store_id));
+  const testimonials = await storeService.findTestimonials(
+    Number(store_id),
+    Number(quantity)
+  );
   if (testimonials instanceof Error) {
     return res.json({ error: testimonials.message });
   }

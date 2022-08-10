@@ -15,9 +15,7 @@ const options = {
 
 passport.use(
   new JWTStrategy(options, async (payload, done) => {
-    const user = await prisma.users.findUnique({
-      where: { email: payload.email },
-    });
+    const user = await prisma.users.findUnique({ where: { email: payload } });
     if (user) {
       return done(null, user);
     } else {

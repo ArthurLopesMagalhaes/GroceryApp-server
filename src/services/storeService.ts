@@ -54,19 +54,20 @@ export const findProduct = async (id: number) => {
   }
 };
 
-export const findTestimonials = async (id: number) => {
+export const findTestimonials = async (id: number, quantity: number = 10) => {
   try {
     const testimonials = await prisma.testimonials.findMany({
       where: { id_store: id },
+      include: { user: { select: { full_name: true, profile_photo: true } } },
     });
 
-    if (!testimonials) {
-      return new Error("Store doesn't exist");
+    if (testimonials.length <= 0) {
+      return new Error("No testimonials yet");
     }
 
     return testimonials;
   } catch (error) {
-    return new Error("Someting went wrong. Please, try again.");
+    return new Error("Someting went wrong");
   }
 };
 export const findProducts = async (id: number) => {
