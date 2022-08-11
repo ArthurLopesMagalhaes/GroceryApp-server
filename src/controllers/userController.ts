@@ -3,7 +3,9 @@ import { Request, Response } from "express";
 import * as userService from "../services/userService";
 
 export const getFavorites = async (req: Request, res: Response) => {
-  const favorites = await userService.getFavorites();
+  const { id } = req.body;
+
+  const favorites = await userService.getFavorites(Number(id));
 
   if (favorites instanceof Error) {
     res.status(400).json({ error: favorites.message });
