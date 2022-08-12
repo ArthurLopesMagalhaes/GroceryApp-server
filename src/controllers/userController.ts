@@ -8,7 +8,19 @@ export const getFavorites = async (req: Request, res: Response) => {
   const favorites = await userService.getFavorites(Number(id));
 
   if (favorites instanceof Error) {
-    res.status(400).json({ error: favorites.message });
+    return res.status(400).json({ error: favorites.message });
+  }
+
+  res.json(favorites);
+};
+
+export const getOrderHistory = async (req: Request, res: Response) => {
+  const { id } = req.body;
+
+  const favorites = await userService.getFavorites(Number(id));
+
+  if (favorites instanceof Error) {
+    return res.status(400).json({ error: favorites.message });
   }
 
   res.json(favorites);

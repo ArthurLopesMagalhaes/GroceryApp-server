@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import * as storeService from "../services/storeService";
 
 export const getStores = async (req: Request, res: Response) => {
-  const stores = await storeService.findAllStores({ quantity: 1 });
+  const stores = await storeService.findAllStores({ quantity: 3 });
   if (stores instanceof Error) {
     return res.json({ error: stores.message });
   }

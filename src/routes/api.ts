@@ -25,5 +25,6 @@ router.get("/store/:store_id/products", StoreController.getProducts);
 router.get("/testimonials/:store_id/", StoreController.getTestimonials);
 
 router.get("/me/favorites", privateRoute, UserController.getFavorites);
+router.get("/me/order_history", privateRoute, UserController.getOrderHistory);
 
 export default router;

@@ -23,7 +23,18 @@ export const findStore = async (id: number) => {
     const storeRequest = await Promise.all([
       prisma.stores.findUnique({ where: { id } }),
       prisma.products.findMany({ where: { id_store: id }, take: 4 }),
-      prisma.testimonials.findMany({ where: { id_store: id }, take: 2 }),
+      prisma.testimonials.findMany({
+        where: { id_store: id },
+        take: 2,
+        include: {
+          user: {
+            select: {
+              full_name: true,
+              profile_photo: true,
+            },
+          },
+        },
+      }),
     ]);
 
     if (!storeRequest) {
