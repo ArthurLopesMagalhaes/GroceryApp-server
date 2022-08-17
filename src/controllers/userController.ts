@@ -17,11 +17,11 @@ export const getFavorites = async (req: Request, res: Response) => {
 export const getOrderHistory = async (req: Request, res: Response) => {
   const { id } = req.body;
 
-  const favorites = await userService.getFavorites(Number(id));
+  const history = await userService.getHistory(Number(id));
 
-  if (favorites instanceof Error) {
-    return res.status(400).json({ error: favorites.message });
+  if (history instanceof Error) {
+    return res.status(400).json({ error: history.message });
   }
 
-  res.json(favorites);
+  res.json(history);
 };

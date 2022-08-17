@@ -20,7 +20,8 @@ model Orders {
   id         Int        @id @default(autoincrement())
   id_user    Int
   id_store   Int
-  id_product Int        @unique
+  price      Float      @db.Real
+  status     String     @db.VarChar
   stores     Stores     @relation(fields: [id_store], references: [id])
   user       Users      @relation(fields: [id_user], references: [id])
   products   Products[]
