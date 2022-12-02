@@ -3,10 +3,10 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 type FindAllStoresProps = {
-  quantity: number;
+  quantity?: number;
 };
 
-export const findAllStores = async ({ quantity = 3 }: FindAllStoresProps) => {
+export const findAllStores = async ({ quantity }: FindAllStoresProps) => {
   try {
     const allStores = await prisma.stores.findMany({
       orderBy: { rating: "desc" },
